@@ -126,4 +126,86 @@
 </div>
 
 <div class="controls-top">
-    <button onclick
+    <button onclick="resetFilter()">ПОКАЗАТЬ ВСЕ</button>
+    <button class="btn-clear" onclick="clearAll()">ОЧИСТИТЬ</button>
+</div>
+
+<div id="content">
+    <div class="category-group">
+        <div class="category-title">🦅 АВИАЦИЯ «ОРЁЛ»</div>
+        
+        <div class="strat-card">
+            <div class="check-area"><input type="checkbox" checked></div>
+            <div class="info-area">
+                <span class="strat-name">Авиаудар Орла</span>
+                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div>
+            </div>
+        </div>
+
+        <div class="strat-card">
+            <div class="check-area"><input type="checkbox" checked></div>
+            <div class="info-area">
+                <span class="strat-name">500-кг бомба</span>
+                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-title">🛡️ ОБОРОНА</div>
+        
+        <div class="strat-card">
+            <div class="check-area"><input type="checkbox" checked></div>
+            <div class="info-area">
+                <span class="strat-name">Автопушка-турель</span>
+                <div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></div>
+            </div>
+        </div>
+        
+        <div class="strat-card">
+            <div class="check-area"><input type="checkbox" checked></div>
+            <div class="info-area">
+                <span class="strat-name">Гренадерский бастион</span>
+                <div class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    
+    tg.MainButton.setText("ПРИМЕНИТЬ ФИЛЬТР");
+    tg.MainButton.show();
+    tg.MainButton.setParams({ button_color: "#ffe81f", button_text_color: "#000000" });
+
+    tg.MainButton.onClick(() => {
+        const cards = document.querySelectorAll('.strat-card');
+        cards.forEach(card => {
+            const isChecked = card.querySelector('input').checked;
+            card.classList.toggle('hidden', !isChecked);
+        });
+
+        // Скрываем заголовки категорий, если в них нет видимых карточек
+        document.querySelectorAll('.category-group').forEach(group => {
+            const hasVisible = Array.from(group.querySelectorAll('.strat-card')).some(c => !c.classList.contains('hidden'));
+            group.classList.toggle('hidden', !hasVisible);
+        });
+        
+        tg.HapticFeedback.impactOccurred('heavy');
+    });
+
+    function resetFilter() {
+        document.querySelectorAll('.strat-card, .category-group').forEach(el => el.classList.remove('hidden'));
+        tg.HapticFeedback.impactOccurred('light');
+    }
+
+    function clearAll() {
+        document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+        tg.HapticFeedback.notificationOccurred('warning');
+    }
+</script>
+
+</body>
+</html>
