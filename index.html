@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HD2 Tactical Pad</title>
+    <title>HD2 Tactical Pad 2026</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --tg-theme-bg: #0b0c10;
-            --tg-theme-secondary: #1f2833;
             --hd-yellow: #ffe81f;
             --hd-blue: #4facfe;
             --hd-white: #ffffff;
+            --card-bg: #1f2833;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, system-ui, sans-serif;
             background-color: var(--tg-theme-bg-color, #0b0c10);
             color: var(--tg-theme-text-color, #c5c6c7);
             margin: 0;
-            padding: 10px;
-            padding-bottom: 100px;
-            overflow-x: hidden; /* Запрещаем горизонтальный скролл */
+            padding: 15px;
+            padding-bottom: 120px; /* Запас под кнопку */
+            overflow-x: hidden;
         }
 
         .header {
@@ -32,141 +32,192 @@
             background: rgba(255, 232, 31, 0.05);
             border-radius: 8px;
         }
+        .header h1 { font-size: 1rem; color: var(--hd-yellow); margin: 0; text-transform: uppercase; }
 
-        .header h1 { font-size: 1rem; color: var(--hd-yellow); margin: 0; letter-spacing: 2px; }
+        /* Кнопки управления */
+        .main-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .btn-apply { background: var(--hd-yellow); color: #000; grid-column: span 2; font-size: 0.9rem; }
+        .btn-reset { background: #45a29e; color: #fff; }
+        .btn-clear { background: #c3073f; color: #fff; }
 
+        .category-group { margin-bottom: 25px; }
         .category-title {
             background: #000;
             color: var(--hd-yellow);
             padding: 8px 12px;
             font-size: 0.9rem;
             font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 20px;
+            margin-bottom: 10px;
             border-left: 4px solid var(--hd-yellow);
-            border-radius: 4px;
         }
 
-        /* КАРТОЧКА СТРАТАГЕМЫ */
+        /* КАРТОЧКА */
         .strat-card {
             display: flex;
             align-items: center;
-            background: var(--tg-theme-secondary-bg-color, #1f2833);
-            margin: 8px 0;
+            background: var(--tg-theme-secondary-bg-color, var(--card-bg));
+            margin-bottom: 8px;
             padding: 12px;
             border-radius: 10px;
-            border-bottom: 2px solid rgba(0,0,0,0.3);
             gap: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .check-area { flex-shrink: 0; }
-        
-        .info-area { flex-grow: 1; overflow: hidden; }
-
+        .info-area { flex-grow: 1; }
         .strat-name {
             display: block;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #fff;
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin-bottom: 5px;
         }
 
-        /* СТРЕЛКИ ТЕПЕРЬ АДАПТИВНЫЕ */
-        .arrows {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap; /* Если стрелок много, они перенесутся на вторую строку */
-        }
+        .arrows { display: flex; gap: 5px; flex-wrap: wrap; }
+        .arrows span { font-size: 1.6rem; font-weight: 900; line-height: 1; }
 
-        .arrows span {
-            font-size: 1.6rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .up { color: var(--hd-white); text-shadow: 0 0 5px #fff; }
-        .down { color: var(--hd-blue); text-shadow: 0 0 5px var(--hd-blue); }
-        .left, .right { color: var(--hd-yellow); text-shadow: 0 0 5px var(--hd-yellow); }
+        .up { color: var(--hd-white); }
+        .down { color: var(--hd-blue); }
+        .left, .right { color: var(--hd-yellow); }
 
         .hidden { display: none; }
-
-        /* Кастомный чекбокс для удобства пальцев */
-        input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            accent-color: var(--hd-yellow);
-        }
-
-        .controls-top {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 10px;
-            border-radius: 6px;
-            border: none;
-            font-weight: bold;
-            font-size: 0.8rem;
-            background: #45a29e;
-            color: white;
-        }
-        .btn-clear { background: #c3073f; }
+        input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--hd-yellow); }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>TACTICAL INTERFACE v2.6</h1>
+    <h1>STRATAGEM INTERFACE v2.6</h1>
 </div>
 
-<div class="controls-top">
-    <button onclick="resetFilter()">ПОКАЗАТЬ ВСЕ</button>
-    <button class="btn-clear" onclick="clearAll()">ОЧИСТИТЬ</button>
+<div class="main-controls">
+    <button class="btn btn-apply" onclick="applyFilter()">ПРИМЕНИТЬ ФИЛЬТР</button>
+    <button class="btn btn-reset" onclick="resetFilter()">СБРОСИТЬ</button>
+    <button class="btn btn-clear" onclick="clearAll()">ОЧИСТИТЬ</button>
 </div>
 
-<div id="content">
+<div id="app-content">
     <div class="category-group">
         <div class="category-title">🦅 АВИАЦИЯ «ОРЁЛ»</div>
-        
         <div class="strat-card">
-            <div class="check-area"><input type="checkbox" checked></div>
+            <input type="checkbox" checked>
             <div class="info-area">
                 <span class="strat-name">Авиаудар Орла</span>
                 <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div>
             </div>
         </div>
-
         <div class="strat-card">
-            <div class="check-area"><input type="checkbox" checked></div>
+            <input type="checkbox" checked>
             <div class="info-area">
                 <span class="strat-name">500-кг бомба</span>
                 <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Кассетная бомба</span>
+                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-title">🛰️ ОРБИТАЛЬНЫЕ УДАРЫ</div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Орбитальный лазер</span>
+                <div class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Рельсотрон</span>
+                <div class="arrows"><span class="right">→</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Газовый удар</span>
+                <div class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div>
             </div>
         </div>
     </div>
 
     <div class="category-group">
         <div class="category-title">🛡️ ОБОРОНА</div>
-        
         <div class="strat-card">
-            <div class="check-area"><input type="checkbox" checked></div>
+            <input type="checkbox" checked>
             <div class="info-area">
-                <span class="strat-name">Автопушка-турель</span>
+                <span class="strat-name">Автопушка-часовой</span>
                 <div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></div>
             </div>
         </div>
-        
         <div class="strat-card">
-            <div class="check-area"><input type="checkbox" checked></div>
+            <input type="checkbox" checked>
             <div class="info-area">
-                <span class="strat-name">Гренадерский бастион</span>
+                <span class="strat-name">Гренадерский бастион (NEW)</span>
                 <div class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-title">🔫 ПОДДЕРЖКА</div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Квазарная пушка</span>
+                <div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Рюкзак С4 (NEW 2026)</span>
+                <div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Стерилизатор (Газ)</span>
+                <div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="left">←</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-group">
+        <div class="category-title">🛠️ МИССИИ</div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Укрепление (Reinforce)</span>
+                <div class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="left">←</span><span class="up">↑</span></div>
+            </div>
+        </div>
+        <div class="strat-card">
+            <input type="checkbox" checked>
+            <div class="info-area">
+                <span class="strat-name">Адская бомба</span>
+                <div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></div>
             </div>
         </div>
     </div>
@@ -175,26 +226,26 @@
 <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
-    
-    tg.MainButton.setText("ПРИМЕНИТЬ ФИЛЬТР");
-    tg.MainButton.show();
-    tg.MainButton.setParams({ button_color: "#ffe81f", button_text_color: "#000000" });
 
-    tg.MainButton.onClick(() => {
+    // Дублируем "Применить" в нативную кнопку Telegram (для удобства)
+    tg.MainButton.setText("ПРИМЕНИТЬ ВЫБОР");
+    tg.MainButton.show();
+    tg.MainButton.onClick(applyFilter);
+
+    function applyFilter() {
         const cards = document.querySelectorAll('.strat-card');
         cards.forEach(card => {
-            const isChecked = card.querySelector('input').checked;
-            card.classList.toggle('hidden', !isChecked);
+            const checked = card.querySelector('input').checked;
+            card.classList.toggle('hidden', !checked);
         });
 
-        // Скрываем заголовки категорий, если в них нет видимых карточек
         document.querySelectorAll('.category-group').forEach(group => {
             const hasVisible = Array.from(group.querySelectorAll('.strat-card')).some(c => !c.classList.contains('hidden'));
             group.classList.toggle('hidden', !hasVisible);
         });
         
-        tg.HapticFeedback.impactOccurred('heavy');
-    });
+        tg.HapticFeedback.impactOccurred('medium');
+    }
 
     function resetFilter() {
         document.querySelectorAll('.strat-card, .category-group').forEach(el => el.classList.remove('hidden'));
