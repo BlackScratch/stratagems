@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HD2 Tactical Pad 2026</title>
+    <title>HD2 FULL ARSENAL 2026</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -18,216 +18,124 @@
             font-family: -apple-system, system-ui, sans-serif;
             background-color: var(--tg-theme-bg-color, #0b0c10);
             color: var(--tg-theme-text-color, #c5c6c7);
-            margin: 0;
-            padding: 15px;
-            padding-bottom: 120px; /* Запас под кнопку */
+            margin: 0; padding: 10px; padding-bottom: 120px;
             overflow-x: hidden;
         }
 
         .header {
-            text-align: center;
-            border: 1px solid var(--hd-yellow);
-            padding: 10px;
-            margin-bottom: 15px;
+            text-align: center; border: 1px solid var(--hd-yellow);
+            padding: 8px; margin-bottom: 15px; border-radius: 8px;
             background: rgba(255, 232, 31, 0.05);
-            border-radius: 8px;
         }
-        .header h1 { font-size: 1rem; color: var(--hd-yellow); margin: 0; text-transform: uppercase; }
+        .header h1 { font-size: 0.9rem; color: var(--hd-yellow); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Кнопки управления */
-        .main-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            cursor: pointer;
-        }
-        .btn-apply { background: var(--hd-yellow); color: #000; grid-column: span 2; font-size: 0.9rem; }
+        .main-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .btn { padding: 10px; border: none; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; }
+        .btn-apply { background: var(--hd-yellow); color: #000; grid-column: span 2; font-size: 0.85rem; }
         .btn-reset { background: #45a29e; color: #fff; }
         .btn-clear { background: #c3073f; color: #fff; }
 
-        .category-group { margin-bottom: 25px; }
+        .category-group { margin-bottom: 20px; }
         .category-title {
-            background: #000;
-            color: var(--hd-yellow);
-            padding: 8px 12px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--hd-yellow);
+            background: #000; color: var(--hd-yellow);
+            padding: 6px 10px; font-size: 0.8rem; font-weight: bold;
+            margin-bottom: 8px; border-left: 3px solid var(--hd-yellow);
         }
 
-        /* КАРТОЧКА */
         .strat-card {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             background: var(--tg-theme-secondary-bg-color, var(--card-bg));
-            margin-bottom: 8px;
-            padding: 12px;
-            border-radius: 10px;
-            gap: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 5px; padding: 10px; border-radius: 8px; gap: 12px;
         }
 
-        .info-area { flex-grow: 1; }
-        .strat-name {
-            display: block;
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #fff;
-            margin-bottom: 5px;
-        }
+        .info-area { flex-grow: 1; min-width: 0; }
+        .strat-name { display: block; font-weight: bold; font-size: 0.85rem; color: #fff; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .arrows { display: flex; gap: 5px; flex-wrap: wrap; }
-        .arrows span { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+        .arrows { display: flex; gap: 4px; flex-wrap: wrap; }
+        .arrows span { font-size: 1.4rem; font-weight: 900; line-height: 1; }
 
         .up { color: var(--hd-white); }
         .down { color: var(--hd-blue); }
         .left, .right { color: var(--hd-yellow); }
 
         .hidden { display: none; }
-        input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--hd-yellow); }
+        input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--hd-yellow); flex-shrink: 0; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>STRATAGEM INTERFACE v2.6</h1>
-</div>
+<div class="header"><h1>STRATAGEM COMMAND CENTER 2026</h1></div>
 
 <div class="main-controls">
     <button class="btn btn-apply" onclick="applyFilter()">ПРИМЕНИТЬ ФИЛЬТР</button>
-    <button class="btn btn-reset" onclick="resetFilter()">СБРОСИТЬ</button>
+    <button class="btn btn-reset" onclick="resetFilter()">СБРОС</button>
     <button class="btn btn-clear" onclick="clearAll()">ОЧИСТИТЬ</button>
 </div>
 
 <div id="app-content">
     <div class="category-group">
         <div class="category-title">🦅 АВИАЦИЯ «ОРЁЛ»</div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Авиаудар Орла</span>
-                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">500-кг бомба</span>
-                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Кассетная бомба</span>
-                <div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div>
-            </div>
-        </div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Авиаудар Орла</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Бомба 500-кг</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Кассетная бомба</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Напалмовый удар</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">110-мм ракеты</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Штурмовой забег</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Дымовой удар</span><div class="arrows"><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="down">↓</span></div></div></div>
     </div>
 
     <div class="category-group">
         <div class="category-title">🛰️ ОРБИТАЛЬНЫЕ УДАРЫ</div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Орбитальный лазер</span>
-                <div class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Рельсотрон</span>
-                <div class="arrows"><span class="right">→</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Газовый удар</span>
-                <div class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div>
-            </div>
-        </div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Лазер</span><div class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Рельсотрон</span><div class="arrows"><span class="right">→</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">380-мм обстрел</span><div class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">120-мм обстрел</span><div class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Газовый удар</span><div class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Точный удар</span><div class="arrows"><span class="right">→</span><span class="right">→</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Напалм (Орбита)</span><div class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">EMS удар</span><div class="arrows"><span class="right">→</span><span class="right">→</span><span class="left">←</span><span class="down">↓</span></div></div></div>
     </div>
 
     <div class="category-group">
-        <div class="category-title">🛡️ ОБОРОНА</div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Автопушка-часовой</span>
-                <div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Гренадерский бастион (NEW)</span>
-                <div class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></div>
-            </div>
-        </div>
+        <div class="category-title">🛡️ ОБОРОНА И ТУРЕЛИ</div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Автопушка-турель</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Ракетная турель</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="right">→</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Миномет</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="right">→</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">EMS миномет</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Гатлинг-турель</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Гренадерский бастион</span><div class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Башня Теслы</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Генератор щита</span><div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span><span class="left">←</span><span class="right">→</span></div></div></div>
     </div>
 
     <div class="category-group">
-        <div class="category-title">🔫 ПОДДЕРЖКА</div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Квазарная пушка</span>
-                <div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Рюкзак С4 (NEW 2026)</span>
-                <div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Стерилизатор (Газ)</span>
-                <div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="left">←</span></div>
-            </div>
-        </div>
+        <div class="category-title">🔫 ОРУЖИЕ И ПОДДЕРЖКА</div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Квазарная пушка</span><div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Копье (Spear)</span><div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Рельсотрон</span><div class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Стерилизатор (Газ)</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Рюкзак С4</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Огнемет</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Автопушка</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Тяжелый пулемет</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Лазерная пушка</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Безоткатное ружье</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="right">→</span><span class="right">→</span><span class="left">←</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Экзокостюм Патриот</span><div class="arrows"><span class="left">←</span><span class="down">↓</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="down">↓</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Пакет снабжения</span><div class="arrows"><span class="down">↓</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="down">↓</span></div></div></div>
     </div>
 
     <div class="category-group">
-        <div class="category-title">🛠️ МИССИИ</div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Укрепление (Reinforce)</span>
-                <div class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="left">←</span><span class="up">↑</span></div>
-            </div>
-        </div>
-        <div class="strat-card">
-            <input type="checkbox" checked>
-            <div class="info-area">
-                <span class="strat-name">Адская бомба</span>
-                <div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></div>
-            </div>
-        </div>
+        <div class="category-title">🛠️ СЛУЖЕБНЫЕ / МИССИИ</div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Укрепление (Reinforce)</span><div class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="left">←</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Адская бомба</span><div class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Пополнение запасов</span><div class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span></div></div></div>
+        <div class="strat-card"><input type="checkbox" checked><div class="info-area"><span class="strat-name">Сигнал SOS</span><div class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="up">↑</span></div></div></div>
     </div>
 </div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
-
-    // Дублируем "Применить" в нативную кнопку Telegram (для удобства)
     tg.MainButton.setText("ПРИМЕНИТЬ ВЫБОР");
     tg.MainButton.show();
     tg.MainButton.onClick(applyFilter);
@@ -235,15 +143,12 @@
     function applyFilter() {
         const cards = document.querySelectorAll('.strat-card');
         cards.forEach(card => {
-            const checked = card.querySelector('input').checked;
-            card.classList.toggle('hidden', !checked);
+            card.classList.toggle('hidden', !card.querySelector('input').checked);
         });
-
         document.querySelectorAll('.category-group').forEach(group => {
             const hasVisible = Array.from(group.querySelectorAll('.strat-card')).some(c => !c.classList.contains('hidden'));
             group.classList.toggle('hidden', !hasVisible);
         });
-        
         tg.HapticFeedback.impactOccurred('medium');
     }
 
@@ -257,6 +162,5 @@
         tg.HapticFeedback.notificationOccurred('warning');
     }
 </script>
-
 </body>
 </html>
