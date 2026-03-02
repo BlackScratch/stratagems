@@ -1,166 +1,146 @@
 <!DOCTYPE html>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-    // Инициализация WebApp
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // Развернуть приложение на весь экран
-</script>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLDIVERS 2 — COMPLETE STRATAGEM LIST 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HELLDIVERS 2 — ТАКТИЧЕСКИЙ ПЛАНШЕТ 2026</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        :root {
+            --tg-theme-bg: #0b0c10;
+            --tg-theme-text: #c5c6c7;
+            --hd-yellow: #ffe81f;
+            --hd-blue: #4facfe;
+            --hd-red: #c3073f;
+        }
+
         body {
             font-family: 'Segoe UI', Impact, sans-serif;
-            background-color: #0b0c10;
-            color: #c5c6c7;
-            padding: 20px;
+            background-color: var(--tg-theme-bg-color, #0b0c10);
+            color: var(--tg-theme-text-color, #c5c6c7);
+            margin: 0;
+            padding: 10px;
+            padding-bottom: 80px; /* Место под кнопку TG */
+            user-select: none;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        
+
+        /* Стиль в духе игры */
         .header { 
             text-align: center; 
-            border: 4px solid #ffe81f; 
-            padding: 20px; 
-            margin-bottom: 30px;
+            border: 2px solid var(--hd-yellow); 
+            padding: 10px; 
+            margin-bottom: 15px;
             background: rgba(255, 232, 31, 0.05);
         }
-        .header h1 { color: #ffe81f; text-transform: uppercase; letter-spacing: 5px; margin: 0; font-size: 2.5em; }
+        .header h1 { color: var(--hd-yellow); text-transform: uppercase; letter-spacing: 2px; margin: 0; font-size: 1.2em; }
 
         .controls {
-            position: sticky;
-            top: 10px;
-            background-color: #1f2833;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 1000;
-            display: flex;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            margin-bottom: 30px;
-            border: 1px solid #45a29e;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
         button {
-            padding: 15px 25px;
+            padding: 12px;
             font-weight: 900;
-            cursor: pointer;
             border: none;
-            border-radius: 5px;
-            transition: 0.2s;
+            border-radius: 8px;
             text-transform: uppercase;
+            font-size: 0.8em;
         }
-        .btn-apply { background-color: #ffe81f; color: #000; }
         .btn-reset { background-color: #45a29e; color: #fff; }
-        .btn-clear { background-color: #c3073f; color: #fff; }
-        button:hover { transform: translateY(-3px); filter: brightness(1.2); }
+        .btn-clear { background-color: var(--hd-red); color: #fff; }
 
-        table { width: 100%; border-collapse: collapse; background-color: #1f2833; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #0b0c10; }
+        table { width: 100%; border-collapse: collapse; background-color: rgba(31, 40, 51, 0.5); }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #000; }
         
         .category-header {
-            background: #0b0c10;
-            color: #ffe81f;
-            padding: 20px;
+            background: #000;
+            color: var(--hd-yellow);
+            padding: 12px;
             font-weight: bold;
-            font-size: 1.6em;
+            font-size: 1em;
             text-transform: uppercase;
-            border-left: 10px solid #ffe81f;
+            border-left: 5px solid var(--hd-yellow);
         }
         
-        /* ГИГАНТСКИЕ СТРЕЛКИ */
+        /* ГИГАНТСКИЕ ЦВЕТНЫЕ СТРЕЛКИ */
         .arrows { 
-            font-size: 2.5em; 
+            font-size: 1.8em; 
             font-weight: 900;
-            letter-spacing: 10px; 
+            letter-spacing: 5px; 
             white-space: nowrap;
         }
 
-        .up { color: #ffffff; text-shadow: 0 0 10px #fff; }
-        .down { color: #4facfe; text-shadow: 0 0 10px #4facfe; }
-        .left, .right { color: #ffe81f; text-shadow: 0 0 10px #ffe81f; }
+        .up { color: #ffffff; text-shadow: 0 0 8px #fff; }
+        .down { color: var(--hd-blue); text-shadow: 0 0 8px var(--hd-blue); }
+        .left, .right { color: var(--hd-yellow); text-shadow: 0 0 8px var(--hd-yellow); }
 
         .hidden { display: none; }
-        tr:hover { background-color: #2b3b4d; }
-        input[type="checkbox"] { transform: scale(2.5); cursor: pointer; }
-        .strat-name { font-size: 1.2em; font-weight: bold; color: #fff; }
+        .strat-name { font-size: 1em; font-weight: bold; color: #fff; display: block; }
+        
+        input[type="checkbox"] { transform: scale(1.8); }
+
+        /* Адаптация под мобильные устройства */
+        @media (max-width: 480px) {
+            .arrows { font-size: 1.5em; letter-spacing: 3px; }
+            .strat-name { font-size: 0.9em; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1>ПОЛНЫЙ РЕЕСТР СТРАТАГЕМ v2.6</h1>
-        <p>ВСЕ ДОСТУПНЫЕ ОПЕРАЦИИ — ОБНОВЛЕНО: МАРТ 2026</p>
+        <h1>COMMAND TERMINAL v2.6</h1>
     </div>
 
     <div class="controls">
-        <button class="btn-apply" onclick="applyFilter()">ПРИМЕНИТЬ</button>
         <button class="btn-reset" onclick="resetFilter()">ПОКАЗАТЬ ВСЕ</button>
-        <button class="btn-clear" onclick="clearAll()">СБРОСИТЬ ГАЛОЧКИ</button>
+        <button class="btn-clear" onclick="clearAll()">ОЧИСТИТЬ</button>
     </div>
 
     <table id="stratTable">
-        <thead>
-            <tr>
-                <th style="width: 80px;">ВЫБОР</th>
-                <th>НАЗВАНИЕ</th>
-                <th>КОД ВВОДА</th>
-            </tr>
-        </thead>
         <tbody>
-            <tr class="cat-row"><td colspan="3" class="category-header">🦅 АВИАЦИЯ «ОРЁЛ» (EAGLE)</td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Авиаудар Орла (Airstrike)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">500-кг бомба (500kg Bomb)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Кассетная бомба (Cluster Bomb)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Напалмовый удар (Napalm)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">110-мм ракеты (Rocket Pods)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Дымовой удар (Smoke Strike)</td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Перевооружение (Rearm)</td><td class="arrows"><span class="up">↑</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span></td></tr>
+            <tr class="cat-row"><td colspan="3" class="category-header">🦅 АВИАЦИЯ «ОРЁЛ»</td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Авиаудар</span></td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">500-кг бомба</span></td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="down">↓</span><span class="down">↓</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Напалм</span></td><td class="arrows"><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></td></tr>
 
-            <tr class="cat-row"><td colspan="3" class="category-header">🛰️ ОРБИТАЛЬНЫЕ СИСТЕМЫ</td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Орбитальный лазер (Laser)</td><td class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Рельсотрон (Railcannon)</td><td class="arrows"><span class="right">→</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">380-мм обстрел (380mm HE)</td><td class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">120-мм обстрел (120mm HE)</td><td class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Газовый удар (Gas Strike)</td><td class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Точный удар (Precision)</td><td class="arrows"><span class="right">→</span><span class="right">→</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Гатлинг-заграждение (Gatling)</td><td class="arrows"><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">EMS удар (EMS Strike)</td><td class="arrows"><span class="right">→</span><span class="right">→</span><span class="left">←</span><span class="down">↓</span></td></tr>
+            <tr class="cat-row"><td colspan="3" class="category-header">🛰️ ОРБИТАЛЬНЫЕ УДАРЫ</td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Лазер</span></td><td class="arrows"><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Рельсотрон</span></td><td class="arrows"><span class="right">→</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span><span class="right">→</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Газовый удар</span></td><td class="arrows"><span class="right">→</span><span class="right">→</span><span class="down">↓</span><span class="right">→</span></td></tr>
 
             <tr class="cat-row"><td colspan="3" class="category-header">🛡️ ОБОРОНА</td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Автопушка-часовой (Autocannon)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Ракетный часовой (Rocket Sentry)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="right">→</span><span class="left">←</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Миномет (Mortar)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="right">→</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Гатлинг-часовой (Gatling Sentry)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="left">←</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Гренадерский бастион (NEW 2026)</td><td class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Установка HMG (HMG Empl.)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span><span class="right">→</span><span class="left">←</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Башня Теслы (Tesla)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Генератор щита (Shield Relay)</td><td class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span><span class="left">←</span><span class="right">→</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Автопушка-турель</span></td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="up">↑</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Гренадер (NEW)</span></td><td class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="left">←</span><span class="right">→</span></td></tr>
 
-            <tr class="cat-row"><td colspan="3" class="category-header">🔫 ПОДДЕРЖКА И ОРУЖИЕ</td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Квазарная пушка (Quasar)</td><td class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Копье (Spear)</td><td class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="down">↓</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Рельсотрон (Railgun)</td><td class="arrows"><span class="down">↓</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Стерилизатор (Gas Thrower)</td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="left">←</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Рюкзак С4 (Satchel Pack)</td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Огнемет (Flamethrower)</td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="down">↓</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Автопушка (Autocannon)</td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Экзокостюм Патриот (Mech)</td><td class="arrows"><span class="left">←</span><span class="down">↓</span><span class="right">→</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Пакет снабжения (Supply)</td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="down">↓</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Прыжковый ранец (Jump Pack)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="up">↑</span><span class="down">↓</span><span class="up">↑</span></td></tr>
-
-            <tr class="cat-row"><td colspan="3" class="category-header">🛠️ СЛУЖЕБНЫЕ КОДЫ</td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Укрепление (Reinforce)</td><td class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="left">←</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Адская бомба (Hellbomb)</td><td class="arrows"><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span><span class="up">↑</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Пополнение (Resupply)</td><td class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="right">→</span></td></tr>
-            <tr><td><input type="checkbox" checked></td><td class="strat-name">Сигнал SOS</td><td class="arrows"><span class="up">↑</span><span class="down">↓</span><span class="right">→</span><span class="up">↑</span></td></tr>
+            <tr class="cat-row"><td colspan="3" class="category-header">🔫 ПОДДЕРЖКА</td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Квазар</span></td><td class="arrows"><span class="down">↓</span><span class="down">↓</span><span class="up">↑</span><span class="left">←</span><span class="right">→</span></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><span class="strat-name">Рюкзак С4</span></td><td class="arrows"><span class="down">↓</span><span class="left">←</span><span class="up">↑</span><span class="right">→</span><span class="down">↓</span></td></tr>
         </tbody>
     </table>
 </div>
 
 <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Развернуть на всё окно
+    
+    // Настраиваем главную кнопку Telegram
+    tg.MainButton.setText("ПРИМЕНИТЬ ВЫБОР");
+    tg.MainButton.show();
+    tg.MainButton.setParams({
+        button_color: "#ffe81f",
+        button_text_color: "#000000"
+    });
+
+    tg.MainButton.onClick(function() {
+        applyFilter();
+        tg.HapticFeedback.impactOccurred('heavy'); // Вибрация при активации
+    });
+
     function applyFilter() {
         const rows = document.querySelectorAll('#stratTable tbody tr');
         rows.forEach(row => {
@@ -186,11 +166,19 @@
 
     function resetFilter() {
         document.querySelectorAll('#stratTable tr').forEach(r => r.classList.remove('hidden'));
+        tg.HapticFeedback.impactOccurred('light');
     }
 
     function clearAll() {
         document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+        tg.HapticFeedback.notificationOccurred('warning');
     }
+
+    // Подстройка цветов под тему Telegram
+    tg.onEvent('themeChanged', function() {
+        document.body.style.backgroundColor = tg.themeParams.bg_color;
+        document.body.style.color = tg.themeParams.text_color;
+    });
 </script>
 
 </body>
